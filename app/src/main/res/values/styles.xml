@@ -1,0 +1,28 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Counter">
+        <item name="android:textColor">#FBC02D</item>
+    </style>
+
+    <style name="Hint">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="CounterText">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+    
+    <style name="ToolbarName" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/colorIcons</item>
+        <item name="titleTextColor">@color/colorIcons</item>
+    </style>
+
+</resources>

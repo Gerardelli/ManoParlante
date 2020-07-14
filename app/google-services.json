@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "865362823464",
+    "firebase_url": "https://talkinghand-3fec9.firebaseio.com",
+    "project_id": "talkinghand-3fec9",
+    "storage_bucket": "talkinghand-3fec9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865362823464:android:d08f92d4ae37787f1da81d",
+        "android_client_info": {
+          "package_name": "com.santiago.talkinghand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865362823464-h4j73vh6pllr3nft6rkimor9qp9ppbqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santiago.talkinghand",
+            "certificate_hash": "cc038b28b6f91dd2598a63b60634cf2cadf2d805"
+          }
+        },
+        {
+          "client_id": "865362823464-53emck6adev9nlug8lubjv1gbnuc3ijf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJiyOmSUmRlzx3ZlxZNv8tNvPL1qSCxX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865362823464-53emck6adev9nlug8lubjv1gbnuc3ijf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemInicio"
+        android:icon="@drawable/ic_home"
+        android:title="INICIO" />
+    <item
+        android:id="@+id/itemBusquedas"
+        android:icon="@drawable/ic_busqueda"
+        android:title="BÚSQUEDAS" />
+    <item
+        android:id="@+id/itemMensajes"
+        android:icon="@drawable/ic_chat"
+        android:title="CHATS" />
+    <item
+        android:id="@+id/itemInfo"
+        android:icon="@drawable/ic_info"
+        android:title="INFORMACIÓN" />
+    <item
+        android:id="@+id/itemPerfil"
+        android:icon="@drawable/ic_perfil"
+        android:title="PERFIL" />
+</menu>

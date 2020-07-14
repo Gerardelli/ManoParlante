@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PerfilActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryText"/>
+
+    <ImageView
+        android:id="@+id/imagenPortada"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/portada"
+        android:alpha="0.7"
+        android:scaleType="centerCrop"
+        app:layout_collapseMode="parallax"
+        android:transitionName="@string/transitionname_picture"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagenPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:src="@drawable/ic_perfil"
+        app:civ_circle_background_color="@color/colorDivider"
+        android:layout_marginTop="130dp"
+        app:civ_border_color="@color/colorIcons"
+        app:civ_border_width="5dp"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="270dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/account"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/Hint"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtUsuarioEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Nombre completo"
+                    android:inputType="textEmailAddress"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/telefono"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/Hint"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtTelefonoEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Teléfono"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnActualizarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ACTUALIZAR PERFIL"
+        android:background="@drawable/button_green"
+        android:textColor="@color/colorIcons"
+        android:textSize="18sp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/btnBackPerfil"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/back"
+        app:civ_circle_background_color="@color/colorPrimary"
+        android:layout_margin="15dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
