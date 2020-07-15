@@ -1,6 +1,7 @@
 package com.santiago.talkinghand.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.santiago.talkinghand.R;
+import com.santiago.talkinghand.activities.DetallePublicacionActivity;
 import com.santiago.talkinghand.models.Publicacion;
 import com.squareup.picasso.Picasso;
 
@@ -26,6 +29,8 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Publicacion publicacion) {
+        DocumentSnapshot document = getSnapshots().getSnapshot(position);
+        final String publicacionId = document.getId();
         holder.txtDescipcionPublicacion.setText(publicacion.getDescripcion());
 
         if(publicacion.getImagen() != null){
@@ -36,7 +41,9 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
         holder.viewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+                Intent intent = new Intent(context, DetallePublicacionActivity.class);
+                intent.putExtra("id", publicacionId);
+                context.startActivity(intent);
             }
         });
     }
