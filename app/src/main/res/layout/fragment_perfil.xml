@@ -3,25 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.PerfilFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:layout_marginTop="0dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorIcons">
-                
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -35,7 +35,7 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     android:transitionName="@string/transitionname_picture"/>
-                
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imagenUsuario"
                     android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                         android:textSize="15dp"/>
 
                 </LinearLayout>
-                
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                         android:textSize="15dp"/>
 
                 </LinearLayout>
-                
+
                 <LinearLayout
                     android:id="@+id/editPerfil"
                     android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:src="@drawable/ic_pen"/>
-                    
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                 </LinearLayout>
 
             </FrameLayout>
-            
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

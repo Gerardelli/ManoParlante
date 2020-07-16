@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp"
+    android:layout_marginBottom="5dp">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleComentPerfil"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/account"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorGris"
+            app:cardCornerRadius="10dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                
+                <TextView
+                    android:id="@+id/txtUsernameComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alejandro Palafox"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryText"/>
+
+                <TextView
+                    android:id="@+id/txtDescripcionComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comentario de la publicación"
+                    android:textStyle="italic"/>
+                
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        
+    </LinearLayout>
+
+</FrameLayout>

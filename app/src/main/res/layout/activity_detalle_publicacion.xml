@@ -8,14 +8,16 @@
     tools:context=".activities.DetallePublicacionActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_anchorGravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="320dp">
@@ -37,13 +39,14 @@
                     app:sliderIndicatorUnselectedColor="#FFF"
                     app:sliderScrollTimeInSec="1"
                     app:sliderStartAutoCycle="true" />
-                
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnComentario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chat"
                     android:layout_gravity="right|bottom"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_chat" />
 
             </FrameLayout>
 
@@ -51,16 +54,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:elevation="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/circlePerfilPost"
@@ -68,26 +71,27 @@
                         android:layout_height="50dp"
                         android:src="@drawable/account"
                         app:civ_border_color="@color/colorSecondaryText"
-                        app:civ_border_width="2dp"/>
+                        app:civ_border_width="2dp" />
 
                     <LinearLayout
                         android:layout_width="160dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:layout_marginLeft="15dp"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtUsernamePost"
                             android:layout_width="match_parent"
-                            android:textColor="@color/colorPrimaryText"
                             android:layout_height="wrap_content"
-                            android:text="Alejandro Palafox"/>
+                            android:text="Alejandro Palafox"
+                            android:textColor="@color/colorPrimaryText" />
+
                         <TextView
                             android:id="@+id/txtCorreoPost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="alex@gmail.com"/>
+                            android:text="alex@gmail.com" />
 
                     </LinearLayout>
 
@@ -95,32 +99,79 @@
                         android:id="@+id/btnVerPerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="VER PERFIL"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_border"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingLeft="10dp"/>
+                        android:text="VER PERFIL"
+                        android:textColor="@color/colorPrimaryDark" />
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="25dp"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:text="DESCRIPCIÓN"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtDescripcionPost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
-                android:textSize="16dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"/>
+                android:layout_marginRight="25dp"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                android:textSize="16dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorDivider"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"/>
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:text="COMENTARIOS"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/recyclerViewComentarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
