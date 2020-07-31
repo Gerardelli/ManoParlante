@@ -1,7 +1,9 @@
 package com.santiago.talkinghand.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +26,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
 import com.santiago.talkinghand.adapters.ComentariosAdapter;
 import com.santiago.talkinghand.adapters.PublicacionesAdapter;
@@ -33,8 +38,10 @@ import com.santiago.talkinghand.models.Comentario;
 import com.santiago.talkinghand.models.SliderItem;
 import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.ComentarioProvider;
+import com.santiago.talkinghand.providers.LikesProvider;
 import com.santiago.talkinghand.providers.PublicacionProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
+import com.santiago.talkinghand.utils.RelativeTime;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -53,16 +60,19 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     String mExtraPublicacionId;
 
     PublicacionProvider mPublicacionProvider;
+    LikesProvider mLikesProvider;
     UsuarioProvider mUsuarioProvider;
     ComentarioProvider mComentarioProvider;
     AuthProvider mAuthProvider;
     ComentariosAdapter comentariosAdapter;
 
+    Toolbar mToolbar;
     TextView mTextDescripcion;
     TextView mTextUsuario;
     TextView mTextCorreo;
+    TextView mTextNumeroLikes;
+    TextView mTextRelativeTime;
     CircleImageView fotoPerfil;
-    CircleImageView btnIrPublicaciones;
     Button btnVerPerfil;
     FloatingActionButton btnComentario;
     RecyclerView recyclerViewComentario;
@@ -79,32 +89,31 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         mPublicacionProvider = new PublicacionProvider();
         mComentarioProvider = new ComentarioProvider();
         mAuthProvider = new AuthProvider();
+        mLikesProvider = new LikesProvider();
         mExtraPublicacionId = getIntent().getStringExtra("id");
 
         mTextDescripcion = findViewById(R.id.txtDescripcionPost);
         mTextUsuario = findViewById(R.id.txtUsernamePost);
         mTextCorreo = findViewById(R.id.txtCorreoPost);
+        mTextNumeroLikes = findViewById(R.id.txtViewLikes);
+        mTextRelativeTime = findViewById(R.id.txtRelativeTime);
         fotoPerfil = findViewById(R.id.circlePerfilPost);
-        btnIrPublicaciones = findViewById(R.id.btnIrPublicaciones);
         btnVerPerfil = findViewById(R.id.btnVerPerfil);
         btnComentario = findViewById(R.id.btnComentario);
         recyclerViewComentario = findViewById(R.id.recyclerViewComentarios);
+        mToolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetallePublicacionActivity.this);
         recyclerViewComentario.setLayoutManager(linearLayoutManager);
-
 
         btnComentario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mostrarDialogComentario();
-            }
-        });
-
-        btnIrPublicaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
             }
         });
 
@@ -116,6 +125,17 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         });
 
         getPublicacion();
+        getNumeroLikes();
+    }
+
+    private void getNumeroLikes() {
+        mLikesProvider.getLikesByPublicacion(mExtraPublicacionId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                int numeroLikes = queryDocumentSnapshots.size();
+                mTextNumeroLikes.setText(String.valueOf(numeroLikes) + " Me gusta");
+            }
+        });
     }
 
     @Override
@@ -248,6 +268,11 @@ public class DetallePublicacionActivity extends AppCompatActivity {
                     if(documentSnapshot.contains("idUsuario")){
                         mIdUsuario = documentSnapshot.getString("idUsuario");
                         informacionPerfil(mIdUsuario);
+                    }
+                    if(documentSnapshot.contains("timeStamp")){
+                        long mRelativeTime = documentSnapshot.getLong("timeStamp");
+                        String relativeTime = RelativeTime.getTimeAgo(mRelativeTime, DetallePublicacionActivity.this);
+                        mTextRelativeTime.setText(relativeTime);
                     }
                 }
 

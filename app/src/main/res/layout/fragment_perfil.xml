@@ -32,9 +32,7 @@
                     android:layout_height="200dp"
                     android:src="@drawable/portada"
                     android:alpha="0.7"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    android:transitionName="@string/transitionname_picture"/>
+                    android:scaleType="centerCrop"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imagenUsuario"
@@ -187,17 +185,31 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="20dp">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aún no hay publicaciones"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="18dp"
-            android:textStyle="italic"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/textPublicaciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aún no hay publicaciones"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="18dp"
+                android:textStyle="italic"
+                android:textSize="18dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMyPublicacion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

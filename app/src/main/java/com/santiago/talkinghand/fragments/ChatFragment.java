@@ -33,7 +33,6 @@ public class ChatFragment extends Fragment {
         mToolbar = mView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Chats");
-
         return mView;
     }
 }

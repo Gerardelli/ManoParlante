@@ -19,6 +19,10 @@ public class ComentarioProvider {
         return mCollection.document().set(comentario);
     }
 
+    public Query getTodos(){
+        return mCollection.orderBy("timeStamp", Query.Direction.DESCENDING);
+    }
+
     public Query getCommentByPublicacion(String idPost){
         return mCollection.whereEqualTo("idPublicacion", idPost);
     }

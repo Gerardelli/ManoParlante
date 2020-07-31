@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_pen"
         android:layout_gravity="bottom|right"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        />
 
 </FrameLayout>

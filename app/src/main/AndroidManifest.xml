@@ -16,8 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.UsuarioPublicacionActivity"></activity>
-        <activity android:name=".activities.DetallePublicacionActivity" />
+        <activity android:name=".activities.UsuarioPublicacionActivity"
+            android:parentActivityName=".activities.DetallePublicacionActivity"
+            ></activity>
+        <activity android:name=".activities.DetallePublicacionActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity android:name=".activities.PerfilActivity" />
 
         <provider

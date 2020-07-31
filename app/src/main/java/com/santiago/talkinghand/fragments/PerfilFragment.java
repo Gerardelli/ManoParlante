@@ -1,25 +1,33 @@
 package com.santiago.talkinghand.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
 import com.santiago.talkinghand.activities.MainActivity;
 import com.santiago.talkinghand.activities.PerfilActivity;
+import com.santiago.talkinghand.adapters.MyPublicacionesAdapter;
+import com.santiago.talkinghand.adapters.PublicacionesAdapter;
+import com.santiago.talkinghand.models.Publicacion;
 import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.PublicacionProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
@@ -37,12 +45,15 @@ public class PerfilFragment extends Fragment {
     AuthProvider authProvider;
     UsuarioProvider usuarioProvider;
     PublicacionProvider publicacionProvider;
+    MyPublicacionesAdapter mAdapter;
 
     CircleImageView fotoPerfil;
     TextView txtUsuario;
     TextView txtTelefono;
     TextView txtCorreo;
     TextView txtNumPublicaciones;
+    TextView txtPublicaciones;
+    RecyclerView mRecyclerView;
 
     String mUsuario = "";
     String mTelefono = "";
@@ -69,6 +80,11 @@ public class PerfilFragment extends Fragment {
         txtTelefono = mView.findViewById(R.id.txtTelefono);
         txtCorreo = mView.findViewById(R.id.txtCoreoUsuario);
         txtNumPublicaciones = mView.findViewById(R.id.numPublicaciones);
+        txtPublicaciones = mView.findViewById(R.id.textPublicaciones);
+        mRecyclerView = mView.findViewById(R.id.recyclerViewMyPublicacion);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
 
         mLinearLayoutPerfilEditar = mView.findViewById(R.id.editPerfil);
@@ -89,8 +105,42 @@ public class PerfilFragment extends Fragment {
 
         obtenerUsuario();
         getNumeroPublicaciones();
+        verificarPublicaciones();
 
         return mView;
+    }
+
+    private void verificarPublicaciones() {
+        publicacionProvider.getPublicacionesUsuario(authProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                int numeroPublicaciones = queryDocumentSnapshots.size();
+                if(numeroPublicaciones > 0){
+                    txtPublicaciones.setText("Publicaciones");
+                    txtPublicaciones.setTextColor(Color.rgb(0,121,107));
+                }else{
+                    txtPublicaciones.setText("No hay publicaciones");
+                    txtPublicaciones.setTextColor(Color.GRAY);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Query consulta = publicacionProvider.getPublicacionesUsuario(authProvider.getUid());
+        FirestoreRecyclerOptions<Publicacion> options = new FirestoreRecyclerOptions.Builder<Publicacion>().
+                setQuery(consulta, Publicacion.class).build();
+        mAdapter = new MyPublicacionesAdapter(options, getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
     }
 
     private void obtenerUsuario(){

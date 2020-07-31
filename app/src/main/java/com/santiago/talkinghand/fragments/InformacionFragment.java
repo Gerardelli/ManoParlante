@@ -31,8 +31,7 @@ public class InformacionFragment extends Fragment {
 
         mToolbar = mView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Información");
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Noticias");
         return mView;
     }
 }

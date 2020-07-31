@@ -14,8 +14,8 @@
         android:title="CHATS" />
     <item
         android:id="@+id/itemInfo"
-        android:icon="@drawable/ic_info"
-        android:title="INFORMACIÓN" />
+        android:icon="@drawable/ic_news"
+        android:title="NOTICIAS" />
     <item
         android:id="@+id/itemPerfil"
         android:icon="@drawable/ic_perfil"

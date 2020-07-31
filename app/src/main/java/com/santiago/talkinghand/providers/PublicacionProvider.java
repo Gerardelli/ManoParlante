@@ -30,4 +30,8 @@ public class PublicacionProvider {
     public Task<DocumentSnapshot> getPublicacionById(String id){
         return mCollection.document(id).get();
     }
+
+    public Task<Void> eliminar(String idPublicacion){
+        return mCollection.document(idPublicacion).delete();
+    }
 }

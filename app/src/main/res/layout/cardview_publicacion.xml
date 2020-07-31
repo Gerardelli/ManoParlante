@@ -18,6 +18,19 @@
             android:scaleType="centerCrop"/>
 
         <TextView
+            android:id="@+id/txtUsuarioPublicacionCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alejandro Palafox"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:maxLines="1"/>
+
+        <TextView
             android:id="@+id/txtPublicacionCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +39,39 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="16dp"
-            android:maxLines="5"/>
+            android:maxLines="2"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp">
+
+            <ImageView
+                android:id="@+id/imageViewLike"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/icon_like_gray"/>
+
+            <TextView
+                android:id="@+id/txtLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 Me gusta"
+                android:layout_weight="1"
+                android:gravity="center|right"/>
+        </LinearLayout>
+
 "
     </LinearLayout>
 

@@ -3,9 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="50dp"
     tools:context=".fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <include layout="@layout/action_bar_toolbar"/>
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        style="@style/MaterialSearchBarLight"
+        app:mt_hint="Texto de Búsqueda"
+        app:mt_searchIconTint="@color/colorIcons"
+        app:mt_placeholder="Buscar"
+        app:mt_searchBarColor="@color/colorPrimary"
+        app:mt_placeholderColor="@color/colorIcons"
+        app:mt_hintColor="@color/colorIcons"
+        app:mt_backIconTint="@color/colorIcons"
+        app:mt_leftTextSelectorTint="@color/colorIcons"
+        app:mt_textColor="@color/colorIcons"
+        app:mt_clearIconTint="@color/colorIcons"
+        app:mt_maxSuggestionsCount="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchBar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="55dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="5dp"
+            android:id="@+id/recyclerViewUsuarios"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+    </LinearLayout>
 
 </FrameLayout>

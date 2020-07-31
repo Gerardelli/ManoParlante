@@ -52,7 +52,8 @@ public class HomeFragment extends Fragment {
 
         mToolbar = mView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Publicaciones");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Mano Parlante");
+
         setHasOptionsMenu(true);
 
         mFabPublicacion = mView.findViewById(R.id.fabPublicacion);
