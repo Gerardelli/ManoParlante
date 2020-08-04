@@ -35,11 +35,15 @@ import com.santiago.talkinghand.adapters.ComentariosAdapter;
 import com.santiago.talkinghand.adapters.PublicacionesAdapter;
 import com.santiago.talkinghand.adapters.SliderAdapter;
 import com.santiago.talkinghand.models.Comentario;
+import com.santiago.talkinghand.models.FCMBody;
+import com.santiago.talkinghand.models.FCMResponse;
 import com.santiago.talkinghand.models.SliderItem;
 import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.ComentarioProvider;
 import com.santiago.talkinghand.providers.LikesProvider;
+import com.santiago.talkinghand.providers.NotificationProvider;
 import com.santiago.talkinghand.providers.PublicacionProvider;
+import com.santiago.talkinghand.providers.TokenProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
 import com.santiago.talkinghand.utils.RelativeTime;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -49,9 +53,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetallePublicacionActivity extends AppCompatActivity {
     SliderView mSliderView;
@@ -65,6 +74,8 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     ComentarioProvider mComentarioProvider;
     AuthProvider mAuthProvider;
     ComentariosAdapter comentariosAdapter;
+    NotificationProvider mNotificationProvider;
+    TokenProvider mTokenProvider;
 
     Toolbar mToolbar;
     TextView mTextDescripcion;
@@ -90,6 +101,8 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         mComentarioProvider = new ComentarioProvider();
         mAuthProvider = new AuthProvider();
         mLikesProvider = new LikesProvider();
+        mNotificationProvider = new NotificationProvider();
+        mTokenProvider = new TokenProvider();
         mExtraPublicacionId = getIntent().getStringExtra("id");
 
         mTextDescripcion = findViewById(R.id.txtDescripcionPost);
@@ -206,7 +219,7 @@ public class DetallePublicacionActivity extends AppCompatActivity {
 
     }
 
-    private void crearComentario(String value) {
+    private void crearComentario(final String value) {
         Comentario comentario = new Comentario();
         comentario.setComentario(value);
         comentario.setIdPublicacion(mExtraPublicacionId);
@@ -216,9 +229,51 @@ public class DetallePublicacionActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    sendNotification(value);
                     Toast.makeText(DetallePublicacionActivity.this, "Comentario creado", Toast.LENGTH_LONG).show();
                 }else {
                     Toast.makeText(DetallePublicacionActivity.this, "Comentario sin registrar", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void sendNotification(final String comment) {
+        if(mIdUsuario == null){
+            return;
+        }
+        mTokenProvider.getToken(mIdUsuario).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    if(documentSnapshot.contains("token")){
+                        String token = documentSnapshot.getString("token");
+                        Map<String, String> data = new HashMap<>();
+                        data.put("title", "Nuevo Comentario");
+                        data.put("body", comment);
+                        FCMBody body = new FCMBody(token, "high", "4500s", data);
+                        mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
+                            @Override
+                            public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                                if(response.body() != null){
+                                    if(response.body().getSuccess()==1){
+                                        Toast.makeText(DetallePublicacionActivity.this, "Notificacion enviada", Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(DetallePublicacionActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                                    }
+                                }else {
+                                    Toast.makeText(DetallePublicacionActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }else{
+                    Toast.makeText(DetallePublicacionActivity.this, "No existe token", Toast.LENGTH_LONG).show();
                 }
             }
         });

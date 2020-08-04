@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.txtPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
         mButtonGoogle = findViewById(R.id.btnGoogleAccount);
-        errorCorreo = findViewById(R.id.errorCorreo);
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Iniciando Sesión")

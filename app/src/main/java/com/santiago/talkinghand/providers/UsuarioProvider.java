@@ -30,6 +30,9 @@ public class UsuarioProvider {
     public Query getUsuarios(){
         return mFirestoreCollection.orderBy("timeStamp", Query.Direction.DESCENDING);
     }
+    public Query getUsuarioByUsername(String username){
+        return mFirestoreCollection.orderBy("usuario").startAt(username).endAt(username+'\uf8ff');
+    }
 
     public Task<Void> updateUsuario(Usuario usuario){
         Map<String, Object> map = new HashMap<>();

@@ -55,10 +55,21 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
     }
 
     private void searchByUsuario(String usuario){
+        Query consulta = mUsuarioProvider.getUsuarioByUsername(usuario);
+        FirestoreRecyclerOptions<Usuario> options = new FirestoreRecyclerOptions.Builder<Usuario>().
+                setQuery(consulta, Usuario.class).build();
+        usuariosAdapterSearch = new UsuariosAdapter(options, getContext());
+        usuariosAdapterSearch.notifyDataSetChanged();
+        mRecyclerView.setAdapter(usuariosAdapterSearch);
+        usuariosAdapterSearch.startListening();
+    }
+
+    private void obtenerUsuarios(){
         Query consulta = mUsuarioProvider.getUsuarios();
         FirestoreRecyclerOptions<Usuario> options = new FirestoreRecyclerOptions.Builder<Usuario>().
                 setQuery(consulta, Usuario.class).build();
         usuariosAdapter = new UsuariosAdapter(options, getContext());
+        usuariosAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(usuariosAdapter);
         usuariosAdapter.startListening();
     }
@@ -66,28 +77,28 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
     @Override
     public void onStart() {
         super.onStart();
-        Query consulta = mUsuarioProvider.getUsuarios();
-        FirestoreRecyclerOptions<Usuario> options = new FirestoreRecyclerOptions.Builder<Usuario>().
-                setQuery(consulta, Usuario.class).build();
-        usuariosAdapter = new UsuariosAdapter(options, getContext());
-        mRecyclerView.setAdapter(usuariosAdapter);
-        usuariosAdapter.startListening();
+        obtenerUsuarios();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         usuariosAdapter.stopListening();
+        if(usuariosAdapterSearch != null ){
+            usuariosAdapterSearch.stopListening();
+        }
     }
 
     @Override
     public void onSearchStateChanged(boolean enabled) {
-
+        if(!enabled){
+            obtenerUsuarios();
+        }
     }
 
     @Override
     public void onSearchConfirmed(CharSequence text) {
-        Toast.makeText(getContext(), "Tu busqueda fue: " + text, Toast.LENGTH_LONG).show();
+        searchByUsuario(text.toString());
     }
 
     @Override

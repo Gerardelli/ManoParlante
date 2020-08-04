@@ -6,23 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="50dp"
     tools:context=".fragments.SearchFragment">
-
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        style="@style/MaterialSearchBarLight"
-        app:mt_hint="Texto de Búsqueda"
-        app:mt_searchIconTint="@color/colorIcons"
-        app:mt_placeholder="Buscar"
-        app:mt_searchBarColor="@color/colorPrimary"
-        app:mt_placeholderColor="@color/colorIcons"
-        app:mt_hintColor="@color/colorIcons"
-        app:mt_backIconTint="@color/colorIcons"
-        app:mt_leftTextSelectorTint="@color/colorIcons"
-        app:mt_textColor="@color/colorIcons"
-        app:mt_clearIconTint="@color/colorIcons"
-        app:mt_maxSuggestionsCount="5"
+    
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchBar" />
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            style="@style/MaterialSearchBarLight"
+            app:mt_hint="Nombre de la persona"
+            app:mt_searchIconTint="@color/colorIcons"
+            app:mt_placeholder="Buscar personas"
+            app:mt_searchBarColor="@color/colorPrimary"
+            app:mt_placeholderColor="@color/colorIcons"
+            app:mt_hintColor="@color/colorIcons"
+            app:mt_backIconTint="@color/colorIcons"
+            app:mt_leftTextSelectorTint="@color/colorIcons"
+            app:mt_textColor="@color/colorIcons"
+            app:mt_clearIconTint="@color/colorIcons"
+            app:mt_maxSuggestionsCount="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchBar" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

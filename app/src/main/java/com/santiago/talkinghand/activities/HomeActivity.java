@@ -15,18 +15,25 @@ import com.santiago.talkinghand.fragments.HomeFragment;
 import com.santiago.talkinghand.fragments.InformacionFragment;
 import com.santiago.talkinghand.fragments.PerfilFragment;
 import com.santiago.talkinghand.fragments.SearchFragment;
+import com.santiago.talkinghand.providers.AuthProvider;
+import com.santiago.talkinghand.providers.TokenProvider;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
+    TokenProvider mTokenProvider;
+    AuthProvider mAuthProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mTokenProvider = new TokenProvider();
+        mAuthProvider = new AuthProvider();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         openFragment(new HomeFragment());
+        createToken();
     }
 
     public void openFragment(Fragment fragment) {
@@ -58,4 +65,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    private void createToken(){
+        mTokenProvider.crearToken(mAuthProvider.getUid());
+    }
 }
