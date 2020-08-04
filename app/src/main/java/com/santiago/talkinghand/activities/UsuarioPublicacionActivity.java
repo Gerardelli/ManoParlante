@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,6 +41,7 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     TextView txtPublicaciones;
     Toolbar mToolbar;
+    FloatingActionButton mFabChat;
 
     AuthProvider authProvider;
     UsuarioProvider usuarioProvider;
@@ -69,6 +72,18 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         txtNumPublicaciones = findViewById(R.id.numPublicaciones);
         mRecyclerView = findViewById(R.id.recyclerViewMyPublicacion);
         mToolbar = findViewById(R.id.toolbar);
+        mFabChat = findViewById(R.id.fabChat);
+
+        if(authProvider.getUid().equals(mExtraUser)){
+            mFabChat.setEnabled(false);
+        }
+
+        mFabChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irAlChat();
+            }
+        });
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
@@ -81,6 +96,13 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         obtenerUsuario();
         getNumeroPublicaciones();
         verificarPublicaciones();
+    }
+
+    private void irAlChat() {
+        Intent intent = new Intent(UsuarioPublicacionActivity.this, ChatActivity.class);
+        intent.putExtra("idUsuario1", authProvider.getUid());
+        intent.putExtra("idUsuario2", mExtraUser); //id del usuario actual
+        startActivity(intent);
     }
 
     @Override
