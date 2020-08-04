@@ -9,8 +9,9 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         android:background="@color/colorPrimary">
 
         <com.mancj.materialsearchbar.MaterialSearchBar

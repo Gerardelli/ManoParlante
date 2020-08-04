@@ -9,9 +9,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorIcons"
+        android:background="@color/colorPrimary"
         app:subtitleTextColor="@color/colorPrimaryDark"
-        app:titleTextColor="@color/colorPrimaryDark"
+        app:titleTextColor="@color/colorIcons"
         app:theme="@style/ToolbarName"/>
 
 </com.google.android.material.appbar.AppBarLayout>
