@@ -7,12 +7,56 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".activities.ChatActivity">
+
+    <include layout="@layout/action_bar_toolbar"/>
     
-    <TextView
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/chat_backgroud"
+        android:layout_marginTop="55dp"
+        android:scaleType="centerCrop"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="60dp">
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMensajes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CHATS"
-        android:layout_gravity="center"
-        android:textAlignment="center"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="bottom">
+
+        <EditText
+            android:id="@+id/txtEnviarMensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Mensaje..."
+            android:layout_weight="1"
+            android:inputType="textMultiLine"
+            android:background="@drawable/edittext_chat_personalizado"
+            android:padding="10dp"/>
+
+        <ImageView
+            android:id="@+id/imgEnviarMensaje"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@mipmap/ic_send_center"
+            android:layout_marginLeft="10dp"/>
+        
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="50dp"
+    android:background="@color/colorPrimaryLight"
     tools:context=".fragments.HomeFragment">
 
     <include layout="@layout/action_bar_toolbar"/>
@@ -28,7 +29,7 @@
         android:id="@+id/fabPublicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_pen"
+        android:src="@drawable/ic_camera"
         android:layout_gravity="bottom|right"
         android:layout_margin="15dp"
         />

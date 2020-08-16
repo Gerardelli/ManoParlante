@@ -54,7 +54,6 @@ public class ChatFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Chats");
 
-
         return mView;
     }
 
@@ -73,5 +72,13 @@ public class ChatFragment extends Fragment {
     public void onStop() {
         super.onStop();
         mChatsAdapter.stopListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mChatsAdapter.obtenerListener() != null){
+            mChatsAdapter.obtenerListener().remove();
+        }
     }
 }

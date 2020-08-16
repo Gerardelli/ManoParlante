@@ -2,6 +2,7 @@ package com.santiago.talkinghand.providers;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -23,6 +24,10 @@ public class UsuarioProvider {
         return mFirestoreCollection.document(id).get();
     }
 
+    public DocumentReference getUsuarioTiempoReal(String id){
+        return mFirestoreCollection.document(id);
+    }
+
     public Task<Void> create(Usuario user){
         return  mFirestoreCollection.document(user.getUid()).set(user);
     }
@@ -41,5 +46,11 @@ public class UsuarioProvider {
         map.put("timeStamp", new Date().getTime());
         map.put("imagenPerfil", usuario.getImagenPerfil());
         return mFirestoreCollection.document(usuario.getUid()).update(map);
+    }
+    public Task<Void> updateUsuarioEnlinea(String idUsuario, boolean estado){
+        Map<String, Object> map = new HashMap<>();
+        map.put("enlinea", estado);
+        map.put("ultimaconexion", new Date().getTime());
+        return mFirestoreCollection.document(idUsuario).update(map);
     }
 }

@@ -24,6 +24,6 @@ public class ComentarioProvider {
     }
 
     public Query getCommentByPublicacion(String idPost){
-        return mCollection.whereEqualTo("idPublicacion", idPost);
+        return mCollection.whereEqualTo("idPublicacion", idPost).orderBy("timeStamp", Query.Direction.ASCENDING);
     }
 }

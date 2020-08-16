@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp">
@@ -39,7 +39,7 @@
                 android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/textViewUMensajeChat"
+                android:id="@+id/textUltimoMensaje"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -49,6 +49,26 @@
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="14dp"/>
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/mensajesSinLeer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            
+            <View
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/vista_circular"/>
+
+            <TextView
+                android:id="@+id/msjSinLeer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="0"
+                android:textColor="@color/colorIcons"
+                android:layout_gravity="center"/>
+        </FrameLayout>
 
     </LinearLayout>
 

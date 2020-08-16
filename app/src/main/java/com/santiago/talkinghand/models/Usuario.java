@@ -8,17 +8,37 @@ public class Usuario {
     private String telefono;
     private long timeStamp;
     private String imagenPerfil;
+    private  long online;
+    private  long ultimaconexion;
 
     public Usuario() {
     }
 
-    public Usuario(String uid, String usuario, String email, String telefono, long timeStamp, String imagenPerfil) {
+    public Usuario(String uid, String usuario, String email, String telefono, long timeStamp, String imagenPerfil, long online, long ultimaconexion) {
         Uid = uid;
         Usuario = usuario;
         this.email = email;
         this.telefono = telefono;
         this.timeStamp = timeStamp;
         this.imagenPerfil = imagenPerfil;
+        this.online = online;
+        this.ultimaconexion = ultimaconexion;
+    }
+
+    public long getOnline() {
+        return online;
+    }
+
+    public void setOnline(long online) {
+        this.online = online;
+    }
+
+    public long getUltimaconexion() {
+        return ultimaconexion;
+    }
+
+    public void setUltimaconexion(long ultimaconexion) {
+        this.ultimaconexion = ultimaconexion;
     }
 
     public String getUid() {

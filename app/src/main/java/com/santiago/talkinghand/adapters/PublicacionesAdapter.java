@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
 import com.santiago.talkinghand.activities.DetallePublicacionActivity;
@@ -35,6 +36,7 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
     UsuarioProvider mUsuarioProvider;
     LikesProvider mLikesProvider;
     AuthProvider mAuthProvider;
+    ListenerRegistration mListener;
 
     public PublicacionesAdapter(FirestoreRecyclerOptions<Publicacion> options, Context context){
         super(options);
@@ -81,11 +83,13 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
     }
 
     private void getNumberLikesByPublicacion(String idPublicacion, final ViewHolder holder){
-        mLikesProvider.getLikesByPublicacion(idPublicacion).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mListener = mLikesProvider.getLikesByPublicacion(idPublicacion).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                int numberLikes = queryDocumentSnapshots.size();
-                holder.txtLikes.setText(String.valueOf(numberLikes) + " Me gusta");
+                if(queryDocumentSnapshots != null){
+                    int numberLikes = queryDocumentSnapshots.size();
+                    holder.txtLikes.setText(String.valueOf(numberLikes) + " Me gusta");
+                }
             }
         });
     }
@@ -101,7 +105,7 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
                     holder.imageViewLikes.setImageResource(R.drawable.icon_like_gray);
                     mLikesProvider.delete(idLike);
                 }else{
-                    holder.imageViewLikes.setImageResource(R.drawable.icon_like_green);
+                    holder.imageViewLikes.setImageResource(R.drawable.icon_like_blue);
                     mLikesProvider.create(like);
                 }
             }
@@ -115,7 +119,7 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 int numberDocuments = queryDocumentSnapshots.size();
                 if(numberDocuments > 0){
-                    holder.imageViewLikes.setImageResource(R.drawable.icon_like_green);
+                    holder.imageViewLikes.setImageResource(R.drawable.icon_like_blue);
                 }else{
                     holder.imageViewLikes.setImageResource(R.drawable.icon_like_gray);
                 }
@@ -135,6 +139,10 @@ public class PublicacionesAdapter extends FirestoreRecyclerAdapter<Publicacion, 
                     }
                 }
             });
+    }
+
+    public ListenerRegistration getListener(){
+        return mListener;
     }
 
     @NonNull

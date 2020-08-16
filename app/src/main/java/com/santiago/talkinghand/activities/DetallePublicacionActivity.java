@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
@@ -45,6 +46,7 @@ import com.santiago.talkinghand.providers.NotificationProvider;
 import com.santiago.talkinghand.providers.PublicacionProvider;
 import com.santiago.talkinghand.providers.TokenProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
+import com.santiago.talkinghand.utils.HelperMensajeVisto;
 import com.santiago.talkinghand.utils.RelativeTime;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -89,6 +91,7 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     RecyclerView recyclerViewComentario;
 
     String mIdUsuario = "";
+    ListenerRegistration mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +148,10 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         mLikesProvider.getLikesByPublicacion(mExtraPublicacionId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                int numeroLikes = queryDocumentSnapshots.size();
-                mTextNumeroLikes.setText(String.valueOf(numeroLikes) + " Me gusta");
+                if(queryDocumentSnapshots != null){
+                    int numeroLikes = queryDocumentSnapshots.size();
+                    mTextNumeroLikes.setText(String.valueOf(numeroLikes) + " Me gusta");
+                }
             }
         });
     }
@@ -154,6 +159,7 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        HelperMensajeVisto.actualizarEnlinea(true, DetallePublicacionActivity.this);
 
         Query consulta = mComentarioProvider.getCommentByPublicacion(mExtraPublicacionId);
         FirestoreRecyclerOptions<Comentario> options = new FirestoreRecyclerOptions.Builder<Comentario>().
@@ -161,6 +167,20 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         comentariosAdapter = new ComentariosAdapter(options, DetallePublicacionActivity.this);
         recyclerViewComentario.setAdapter(comentariosAdapter);
         comentariosAdapter.startListening();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListener != null){
+            mListener.remove();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HelperMensajeVisto.actualizarEnlinea(false, DetallePublicacionActivity.this);
     }
 
     @Override

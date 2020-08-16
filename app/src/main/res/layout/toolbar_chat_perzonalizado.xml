@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        android:layout_marginTop="5dp"/>
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circlePerfil"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:civ_circle_background_color="@color/colorIcons"
+        android:src="@drawable/ic_perfil"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/imgBack"/>
+    
+    <TextView
+        android:id="@+id/txtUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuario"
+        android:textColor="@color/colorIcons"
+        android:textSize="18dp"
+        android:maxLines="1"
+        android:layout_toRightOf="@+id/circlePerfil"/>
+
+    <TextView
+        android:id="@+id/txtRelativeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorIcons"
+        android:text=""
+        android:maxLines="1"
+        android:textSize="12dp"
+        android:layout_toRightOf="@+id/circlePerfil"
+        android:layout_below="@+id/txtUsuario"/>
+
+</RelativeLayout>

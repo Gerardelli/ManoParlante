@@ -30,6 +30,7 @@ import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.ImagenProvider;
 import com.santiago.talkinghand.providers.PublicacionProvider;
 import com.santiago.talkinghand.utils.FileUtil;
+import com.santiago.talkinghand.utils.HelperMensajeVisto;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -106,6 +107,19 @@ public class PublicacionActivity extends AppCompatActivity {
                 seleccionarOpcionImagen(1);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HelperMensajeVisto.actualizarEnlinea(true, PublicacionActivity.this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HelperMensajeVisto.actualizarEnlinea(false, PublicacionActivity.this);
     }
 
     private void seleccionarOpcionImagen(final int numeroImagen) {

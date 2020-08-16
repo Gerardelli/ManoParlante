@@ -17,11 +17,14 @@ import com.santiago.talkinghand.fragments.PerfilFragment;
 import com.santiago.talkinghand.fragments.SearchFragment;
 import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.TokenProvider;
+import com.santiago.talkinghand.providers.UsuarioProvider;
+import com.santiago.talkinghand.utils.HelperMensajeVisto;
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     TokenProvider mTokenProvider;
     AuthProvider mAuthProvider;
+    UsuarioProvider mUsuarioProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,24 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mTokenProvider = new TokenProvider();
         mAuthProvider = new AuthProvider();
+        mUsuarioProvider = new UsuarioProvider();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         openFragment(new HomeFragment());
         createToken();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HelperMensajeVisto.actualizarEnlinea(true, HomeActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HelperMensajeVisto.actualizarEnlinea(false, HomeActivity.this);
     }
 
     public void openFragment(Fragment fragment) {

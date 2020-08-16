@@ -31,6 +31,7 @@ import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.ImagenProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
 import com.santiago.talkinghand.utils.FileUtil;
+import com.santiago.talkinghand.utils.HelperMensajeVisto;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -110,9 +111,21 @@ public class PerfilActivity extends AppCompatActivity {
                 clickPerfil();
             }
         });
-
         obtenerUsuario();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HelperMensajeVisto.actualizarEnlinea(true, PerfilActivity.this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HelperMensajeVisto.actualizarEnlinea(false, PerfilActivity.this);
     }
 
     private void obtenerUsuario(){

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
@@ -54,6 +56,7 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
     String mCorreo = "";
 
     String mExtraUser;
+    ListenerRegistration mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +76,10 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerViewMyPublicacion);
         mToolbar = findViewById(R.id.toolbar);
         mFabChat = findViewById(R.id.fabChat);
+        mExtraUser = getIntent().getStringExtra("idUser");
 
         if(authProvider.getUid().equals(mExtraUser)){
-            mFabChat.setEnabled(false);
+            mFabChat.hide();
         }
 
         mFabChat.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +96,6 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UsuarioPublicacionActivity.this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mExtraUser = getIntent().getStringExtra("idUser");
         obtenerUsuario();
         getNumeroPublicaciones();
         verificarPublicaciones();
@@ -102,6 +105,7 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         Intent intent = new Intent(UsuarioPublicacionActivity.this, ChatActivity.class);
         intent.putExtra("idUsuario1", authProvider.getUid());
         intent.putExtra("idUsuario2", mExtraUser); //id del usuario actual
+        intent.putExtra("idChat", authProvider.getUid()+mExtraUser);
         startActivity(intent);
     }
 
@@ -122,17 +126,27 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         mAdapter.stopListening();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListener != null){
+            mListener.remove();
+        }
+    }
+
     private void verificarPublicaciones() {
-        publicacionProvider.getPublicacionesUsuario(mExtraUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mListener = publicacionProvider.getPublicacionesUsuario(mExtraUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                int numeroPublicaciones = queryDocumentSnapshots.size();
-                if(numeroPublicaciones > 0){
-                    txtPublicaciones.setText("Publicaciones");
-                    txtPublicaciones.setTextColor(Color.rgb(0,121,107));
-                }else{
-                    txtPublicaciones.setText("No hay publicaciones");
-                    txtPublicaciones.setTextColor(Color.GRAY);
+                if(queryDocumentSnapshots != null){
+                    int numeroPublicaciones = queryDocumentSnapshots.size();
+                    if(numeroPublicaciones > 0){
+                        txtPublicaciones.setText("Publicaciones");
+                        txtPublicaciones.setTextColor(Color.rgb(0,121,107));
+                    }else{
+                        txtPublicaciones.setText("No hay publicaciones");
+                        txtPublicaciones.setTextColor(Color.GRAY);
+                    }
                 }
             }
         });

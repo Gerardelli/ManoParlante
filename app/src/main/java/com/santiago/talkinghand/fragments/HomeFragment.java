@@ -90,6 +90,14 @@ public class HomeFragment extends Fragment {
         publicacionesAdapter.stopListening();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(publicacionesAdapter.getListener() != null){
+            publicacionesAdapter.getListener().remove();
+        }
+    }
+
     private void irAPublicacion() {
         Intent intent = new Intent(getContext(), PublicacionActivity.class);
         startActivity(intent);

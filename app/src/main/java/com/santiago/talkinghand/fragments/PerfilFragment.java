@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santiago.talkinghand.R;
@@ -59,6 +60,8 @@ public class PerfilFragment extends Fragment {
     String mTelefono = "";
     String imagenPerfilURL = "";
     String mCorreo = "";
+
+    ListenerRegistration mListener;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -111,16 +114,18 @@ public class PerfilFragment extends Fragment {
     }
 
     private void verificarPublicaciones() {
-        publicacionProvider.getPublicacionesUsuario(authProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mListener = publicacionProvider.getPublicacionesUsuario(authProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                int numeroPublicaciones = queryDocumentSnapshots.size();
-                if(numeroPublicaciones > 0){
-                    txtPublicaciones.setText("Publicaciones");
-                    txtPublicaciones.setTextColor(Color.rgb(0,121,107));
-                }else{
-                    txtPublicaciones.setText("No hay publicaciones");
-                    txtPublicaciones.setTextColor(Color.GRAY);
+                if(queryDocumentSnapshots != null){
+                    int numeroPublicaciones = queryDocumentSnapshots.size();
+                    if(numeroPublicaciones > 0){
+                        txtPublicaciones.setText("Publicaciones");
+                        txtPublicaciones.setTextColor(Color.rgb(0,121,107));
+                    }else{
+                        txtPublicaciones.setText("No hay publicaciones");
+                        txtPublicaciones.setTextColor(Color.GRAY);
+                    }
                 }
             }
         });
@@ -143,7 +148,16 @@ public class PerfilFragment extends Fragment {
         mAdapter.stopListening();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mListener != null){
+            mListener.remove();
+        }
+    }
+
     private void obtenerUsuario(){
+
         usuarioProvider.getUsuario(authProvider.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
