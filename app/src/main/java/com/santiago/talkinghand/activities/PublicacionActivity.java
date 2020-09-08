@@ -232,7 +232,7 @@ public class PublicacionActivity extends AppCompatActivity {
 
     private void limpiarFormulario() {
         txtDescripcion.setText("");
-        imgPhoto.setImageResource(R.drawable.camara);
+        imgPhoto.setImageResource(R.drawable.ic_camara);
         mDescripcion = "";
         mImageFile = null;
     }
@@ -254,6 +254,7 @@ public class PublicacionActivity extends AppCompatActivity {
                 mFotoFile = null;
                 mImageFile = FileUtil.from(this, data.getData());
                 imgPhoto.setImageBitmap(BitmapFactory.decodeFile(mImageFile.getAbsolutePath()));
+
 
             }catch (Exception e){
                 Log.d("Error", "Se produjo un error" + e.getMessage());

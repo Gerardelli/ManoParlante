@@ -4,6 +4,11 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
+import androidx.core.graphics.drawable.IconCompat;
+
+import com.santiago.talkinghand.models.Mensaje;
 import com.santiago.talkinghand.providers.AuthProvider;
 import com.santiago.talkinghand.providers.UsuarioProvider;
 

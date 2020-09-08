@@ -91,7 +91,6 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     RecyclerView recyclerViewComentario;
 
     String mIdUsuario = "";
-    ListenerRegistration mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,20 +169,6 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mListener != null){
-            mListener.remove();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        HelperMensajeVisto.actualizarEnlinea(false, DetallePublicacionActivity.this);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         comentariosAdapter.startListening();
@@ -231,7 +216,6 @@ public class DetallePublicacionActivity extends AppCompatActivity {
         alBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
 
@@ -288,7 +272,6 @@ public class DetallePublicacionActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<FCMResponse> call, Throwable t) {
-
                             }
                         });
                     }
@@ -379,5 +362,4 @@ public class DetallePublicacionActivity extends AppCompatActivity {
             }
         });
     }
-
 }

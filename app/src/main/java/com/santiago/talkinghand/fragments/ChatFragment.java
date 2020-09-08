@@ -80,5 +80,9 @@ public class ChatFragment extends Fragment {
         if(mChatsAdapter.obtenerListener() != null){
             mChatsAdapter.obtenerListener().remove();
         }
+
+        if(mChatsAdapter.obtenerListenerUltimoMensaje() != null){
+            mChatsAdapter.obtenerListenerUltimoMensaje().remove();
+        }
     }
 }

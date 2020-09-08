@@ -37,13 +37,10 @@ public class MainActivity extends AppCompatActivity {
     TextView mTxtRegistrar;
     TextInputEditText mTextEmail;
     TextInputEditText mTextPassword;
-    TextView errorCorreo;
     Button mBtnLogin;
     AuthProvider mAuthProvider;
     UsuarioProvider mUsuarioProvider;
-    SignInButton mButtonGoogle;
     private GoogleSignInClient mGoogleSignInClient;
-    private final int REQUEST_CODE_GOOGLE = 1;
     AlertDialog mDialog;
 
     @Override
@@ -55,15 +52,12 @@ public class MainActivity extends AppCompatActivity {
         mTextEmail = findViewById(R.id.txtEmail);
         mTextPassword = findViewById(R.id.txtPassword);
         mBtnLogin = findViewById(R.id.btnLogin);
-        mButtonGoogle = findViewById(R.id.btnGoogleAccount);
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Iniciando Sesión")
                 .setCancelable(false).build();
 
         mAuthProvider = new AuthProvider();
-        mUsuarioProvider = new UsuarioProvider();
-
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,14 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        mButtonGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInGoogleAccount();
-            }
-        });
-
+        mUsuarioProvider = new UsuarioProvider();
         
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,25 +84,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void signInGoogleAccount() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_GOOGLE) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                Log.w("ERROR", "Google sign in failed", e);
-            }
-        }
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -124,54 +92,6 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        mDialog.show();
-        mAuthProvider.googlelogin(account).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            String idUser = mAuthProvider.getUid();
-                            checkUsuarioExistente(idUser);
-                        } else {
-                            mDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "No Ingresaste", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-
-    private void checkUsuarioExistente(final String idUsuario) {
-        mUsuarioProvider.getUsuario(idUsuario).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    mDialog.dismiss();
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    String correo = mAuthProvider.getEmail();
-                    Usuario usuario = new Usuario();
-                    usuario.setEmail(correo);
-                    usuario.setUid(idUsuario);
-                    mUsuarioProvider.create(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            mDialog.dismiss();
-                            if(task.isSuccessful()){
-                                Intent intent = new Intent(MainActivity.this, Completar_Perfil_Activity.class);
-                                startActivity(intent);
-                                finish();
-                            }else {
-                                Toast.makeText(MainActivity.this, "No se pudo almacenar la information", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-            }
-        });
     }
 
     private void login() {

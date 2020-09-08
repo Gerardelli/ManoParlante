@@ -28,11 +28,23 @@ public class MensajeProvider {
     }
 
     public Query obtenerUltimoMensaje(String idChat){
-        return mCollection.whereEqualTo("idChat", idChat).orderBy("timeStamp", Query.Direction.DESCENDING).limit(1);
+        return mCollection.whereEqualTo("idChat", idChat).orderBy("timeStamp", Query.Direction.DESCENDING);
+    }
+
+    public Query obtenerUltimoMensajeEmisor(String idChat, String idEmisor){
+        return mCollection.whereEqualTo("idChat", idChat).whereEqualTo("idEmisor", idEmisor).orderBy("timeStamp", Query.Direction.DESCENDING);
     }
 
     public Query obtenetMensajesByChatandEmisor(String idChat, String idEmisor){
         return mCollection.whereEqualTo("idChat", idChat).whereEqualTo("idEmisor", idEmisor).whereEqualTo("visto", false);
+    }
+
+    public Query obteneTrestMensajesByChatandEmisor(String idChat, String idEmisor){
+        return mCollection.whereEqualTo("idChat", idChat)
+                .whereEqualTo("idEmisor", idEmisor)
+                .whereEqualTo("visto", false)
+                .orderBy("timeStamp", Query.Direction.DESCENDING)
+                .limit(3);
     }
 
     public Task<Void> actualizarVisto(String idDocument, boolean estado){

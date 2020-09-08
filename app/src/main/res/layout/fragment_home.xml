@@ -29,7 +29,7 @@
         android:id="@+id/fabPublicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_camera"
+        android:src="@drawable/ic_camara"
         android:layout_gravity="bottom|right"
         android:layout_margin="15dp"
         />

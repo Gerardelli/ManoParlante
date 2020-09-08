@@ -5,13 +5,19 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
+import androidx.core.graphics.drawable.IconCompat;
 
 import com.santiago.talkinghand.R;
+import com.santiago.talkinghand.models.Mensaje;
+
+import java.util.Date;
 
 public class NotificationHelper extends ContextWrapper {
     private static final String CHANNEL_ID ="com.santiago.talkinghand";
@@ -56,6 +62,64 @@ public class NotificationHelper extends ContextWrapper {
                     .setColor(Color.GRAY)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(body).setBigContentTitle(title));
+    }
+
+
+    public NotificationCompat.Builder getNotificacionMensaje(
+            Mensaje[] mensajes,
+            String usuarioEmisor,
+            String usuarioReceptor,
+            String ultimoMensaje,
+            Bitmap bitmapEmisor,
+            Bitmap bitmapReceptor,
+            NotificationCompat.Action action){
+        Person person1 = null;
+        if(bitmapEmisor == null){
+            person1 = new Person.Builder()
+                    .setName(usuarioEmisor)
+                    .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.account))
+                    .build();
+        }else{
+            person1 = new Person.Builder()
+                    .setName(usuarioEmisor)
+                    .setIcon(IconCompat.createWithBitmap(bitmapEmisor))
+                    .build();
+        }
+
+        Person person2 = null;
+        if(bitmapReceptor == null){
+            person2 = new Person.Builder()
+                    .setName(usuarioReceptor)
+                    .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.account))
+                    .build();
+        }else{
+            person2 = new Person.Builder()
+                    .setName(usuarioReceptor)
+                    .setIcon(IconCompat.createWithBitmap(bitmapReceptor))
+                    .build();
+        }
+
+        NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(person1);
+        NotificationCompat.MessagingStyle.Message message1 =
+                new NotificationCompat.MessagingStyle.Message(
+                        ultimoMensaje,
+                        new Date().getTime(),
+                        person1);
+
+        messagingStyle.addMessage(message1);
+
+        for (Mensaje m: mensajes){
+            NotificationCompat.MessagingStyle.Message message2 =
+                    new NotificationCompat.MessagingStyle.Message(
+                            m.getMensaje(),
+                            m.getTimeStamp(),
+                            person2);
+            messagingStyle.addMessage(message2);
+        }
+        return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setStyle(messagingStyle)
+                .addAction(action);
     }
 
 

@@ -32,7 +32,6 @@ public class RegistrarActivity extends AppCompatActivity {
     TextInputEditText mTextUsername;
     TextInputEditText mTextMail;
     TextInputEditText mTextPass;
-    TextInputEditText mTextTelefono;
     Button mBtnRegistrar;
     AuthProvider mAuthProvider;
     UsuarioProvider mUsuarioProvider;
@@ -47,7 +46,6 @@ public class RegistrarActivity extends AppCompatActivity {
         mTextUsername = findViewById(R.id.txtUsuario);
         mTextMail = findViewById(R.id.txtCorreo);
         mTextPass = findViewById(R.id.txtContrasena);
-        mTextTelefono = findViewById(R.id.txtTelefono);
         mBtnRegistrar = findViewById(R.id.btnRegistrar);
 
         mDialog = new SpotsDialog.Builder()
@@ -80,12 +78,11 @@ public class RegistrarActivity extends AppCompatActivity {
         String username = mTextUsername.getText().toString();
         String email = mTextMail.getText().toString();
         String pass = mTextPass.getText().toString();
-        String telefono = mTextTelefono.getText().toString();
 
-        if(!username.isEmpty() && !email.isEmpty() && !pass.isEmpty() && !telefono.isEmpty()){
+        if(!username.isEmpty() && !email.isEmpty() && !pass.isEmpty()){
             if(isEmailValid(email)){
                 if(pass.length() >=6 ){
-                    createUser(username, email, telefono, pass);
+                    createUser(username, email, pass);
                 }else{
                     Toast.makeText(this, "La contraseña debe ser al menos 6 caracteres", Toast.LENGTH_LONG).show();
                 }
@@ -99,7 +96,7 @@ public class RegistrarActivity extends AppCompatActivity {
         }
     }
 
-    private void createUser(final String username, final String email, final String telefono, final String password) {
+    private void createUser(final String username, final String email, final String password) {
         mDialog.show();
         mAuthProvider.registrar(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -109,7 +106,6 @@ public class RegistrarActivity extends AppCompatActivity {
                     Usuario usuario = new Usuario();
                     usuario.setUid(idUsuario);
                     usuario.setEmail(email);
-                    usuario.setTelefono(telefono);
                     usuario.setUsuario(username);
                     usuario.setTimeStamp(new Date().getTime());
                     mUsuarioProvider.create(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -39,7 +39,6 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
     TextView txtUsuario;
     TextView txtTelefono;
     TextView txtCorreo;
-    TextView txtNumPublicaciones;
     RecyclerView mRecyclerView;
     TextView txtPublicaciones;
     Toolbar mToolbar;
@@ -72,7 +71,6 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         txtPublicaciones = findViewById(R.id.textPublicaciones);
         txtTelefono = findViewById(R.id.txtTelefono);
         txtCorreo = findViewById(R.id.txtCoreoUsuario);
-        txtNumPublicaciones = findViewById(R.id.numPublicaciones);
         mRecyclerView = findViewById(R.id.recyclerViewMyPublicacion);
         mToolbar = findViewById(R.id.toolbar);
         mFabChat = findViewById(R.id.fabChat);
@@ -97,7 +95,7 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         obtenerUsuario();
-        getNumeroPublicaciones();
+        //getNumeroPublicaciones();
         verificarPublicaciones();
     }
 
@@ -187,7 +185,7 @@ public class UsuarioPublicacionActivity extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 int numeroPublicaciones = queryDocumentSnapshots.size();
-                txtNumPublicaciones.setText(String.valueOf(numeroPublicaciones));
+                //txtNumPublicaciones.setText(String.valueOf(numeroPublicaciones));
             }
         });
 

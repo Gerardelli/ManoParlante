@@ -45,58 +45,32 @@
                     app:civ_border_width="5dp"/>
 
                 <LinearLayout
+                    android:id="@+id/editPerfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="15dp"
                     android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/txtTelefono"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2282512672"
-                        android:textColor="@color/colorIcons"
-                        android:textStyle="bold"
-                        android:textSize="15dp"/>
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_pen"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TELÉFONO"
-                        android:textColor="@color/colorIcons"
-                        android:textStyle="bold"
-                        android:textSize="15dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/numPublicaciones"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/colorIcons"
-                        android:textStyle="bold"
-                        android:textSize="15dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PUBLICACIONES"
-                        android:textColor="@color/colorIcons"
-                        android:textStyle="bold"
-                        android:textSize="15dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EDITAR"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorIcons"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PERFIL"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorIcons"/>
 
                 </LinearLayout>
 
@@ -126,29 +100,15 @@
                         android:layout_marginTop="5dp"
                         android:textSize="15dp"/>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/editPerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/ic_pen"/>
-
                     <TextView
+                        android:id="@+id/txtTelefono"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EDITAR PERFIL"
+                        android:text="2282512672"
+                        android:textColor="@color/colorSecondaryText"
                         android:textStyle="bold"
-                        android:textColor="@color/colorIcons"/>
+                        android:textSize="15dp"/>
+
                 </LinearLayout>
 
                 <LinearLayout

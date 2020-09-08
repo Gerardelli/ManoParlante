@@ -82,7 +82,6 @@ public class PerfilFragment extends Fragment {
         txtUsuario = mView.findViewById(R.id.txtNombreUsuario);
         txtTelefono = mView.findViewById(R.id.txtTelefono);
         txtCorreo = mView.findViewById(R.id.txtCoreoUsuario);
-        txtNumPublicaciones = mView.findViewById(R.id.numPublicaciones);
         txtPublicaciones = mView.findViewById(R.id.textPublicaciones);
         mRecyclerView = mView.findViewById(R.id.recyclerViewMyPublicacion);
 
@@ -107,7 +106,6 @@ public class PerfilFragment extends Fragment {
         });
 
         obtenerUsuario();
-        getNumeroPublicaciones();
         verificarPublicaciones();
 
         return mView;
@@ -187,16 +185,6 @@ public class PerfilFragment extends Fragment {
         });
     }
 
-    public void getNumeroPublicaciones(){
-        publicacionProvider.getPublicacionesUsuario(authProvider.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                int numeroPublicaciones = queryDocumentSnapshots.size();
-                txtNumPublicaciones.setText(String.valueOf(numeroPublicaciones));
-            }
-        });
-
-    }
 
     private void cerrarSesion() {
         authProvider.cerrarSesion();
