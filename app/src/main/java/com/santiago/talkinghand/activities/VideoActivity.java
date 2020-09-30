@@ -55,6 +55,7 @@ public class VideoActivity extends AppCompatActivity {
     private final int CLIP_REQUEST_CODE = 1;
     private final int RECORDER_REQUEST_CODE = 2;
     Uri videoUri = null;
+    Uri clipUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +107,14 @@ public class VideoActivity extends AppCompatActivity {
         mDescripcion = txtDescripcion.getText().toString();
 
         if(!mDescripcion.isEmpty()){
-            if(videoUri != null){
-                guardarVideo(videoUri);
+            if(clipUri != null){
+                guardarVideo(clipUri);
             }
             else if(videoUri != null){
                 guardarVideo(videoUri);
             }
             else {
-                Toast.makeText(VideoActivity.this, "Selecciona una imagen", Toast.LENGTH_LONG).show();
+                Toast.makeText(VideoActivity.this, "Selecciona un video", Toast.LENGTH_LONG).show();
             }
         }else{
             Toast.makeText(VideoActivity.this, "Completa la descripción", Toast.LENGTH_LONG).show();
@@ -159,8 +160,9 @@ public class VideoActivity extends AppCompatActivity {
         if(requestCode==CLIP_REQUEST_CODE && resultCode == RESULT_OK){
             try {
                 imgVideo.setVisibility(View.GONE);
-                videoUri = intent.getData();
-                vidVideo.setVideoURI(videoUri);
+                clipUri = intent.getData();
+                Toast.makeText(this, ""+clipUri, Toast.LENGTH_LONG).show();
+                vidVideo.setVideoURI(clipUri);
                 vidVideo.start();
 
             }catch (Exception e){
@@ -171,12 +173,10 @@ public class VideoActivity extends AppCompatActivity {
         if(requestCode == RECORDER_REQUEST_CODE && resultCode == RESULT_OK){
             try {
                 imgVideo.setVisibility(View.GONE);
-                Uri uri = intent.getData();
-                vidVideo.setVideoURI(uri);
+                videoUri = intent.getData();
+                Toast.makeText(this, ""+videoUri, Toast.LENGTH_LONG).show();
+                vidVideo.setVideoURI(videoUri);
                 vidVideo.start();
-                imgVideo.setVisibility(View.GONE);
-                guardarVideo(uri);
-
             }catch (Exception e){
                 Log.d("Error", "Se produjo un error" + e.getMessage());
                 Toast.makeText(this, "Se produjo un error" + e.getMessage(), Toast.LENGTH_LONG).show();

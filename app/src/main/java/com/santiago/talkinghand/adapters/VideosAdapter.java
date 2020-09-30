@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -54,7 +55,8 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
         if(video.getVideo() != null){
             if(!video.getVideo().isEmpty()){
                 holder.videoViewVideo.setVideoURI(Uri.parse(video.getVideo()));
-                holder.videoViewVideo.start();
+                holder.videoViewVideo.seekTo(1);
+                holder.videoViewVideo.resume();
             }
         }
 
@@ -157,6 +159,10 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
             txtLikes = view.findViewById(R.id.txtLike);
             videoViewVideo = view.findViewById(R.id.videoCard);
             imageViewLikes = view.findViewById(R.id.imageViewLike);
+
+            MediaController mediaController = new MediaController(context);
+            videoViewVideo.setMediaController(mediaController);
+            mediaController.setAnchorView(videoViewVideo);
 
             viewHolder = view;
         }
