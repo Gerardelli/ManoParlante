@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryLight"
     android:layout_marginBottom="50dp"
+    android:orientation="vertical"
     tools:context=".fragments.InformacionFragment">
 
     <include layout="@layout/action_bar_toolbar"/>
@@ -22,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
-
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +32,7 @@
         android:src="@drawable/ic_video"
         android:layout_gravity="bottom|right"
         android:layout_margin="15dp"
+        android:visibility="gone"
         />
 
 </FrameLayout>

@@ -12,6 +12,8 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleRegistry;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -22,6 +24,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.santiago.talkinghand.R;
 import com.santiago.talkinghand.models.Like;
 import com.santiago.talkinghand.models.Video;
@@ -37,13 +42,15 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
     LikesProvider mLikesProvider;
     AuthProvider mAuthProvider;
     ListenerRegistration mListener;
+    Lifecycle lifecycle;
 
-    public VideosAdapter(FirestoreRecyclerOptions<Video> options, Context context){
+    public VideosAdapter(FirestoreRecyclerOptions<Video> options, Context context, Lifecycle lifecycle){
         super(options);
         this.context = context;
         mUsuarioProvider = new UsuarioProvider();
         mLikesProvider = new LikesProvider();
         mAuthProvider = new AuthProvider();
+        this.lifecycle = lifecycle;
     }
 
     @Override
@@ -54,9 +61,19 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
 
         if(video.getVideo() != null){
             if(!video.getVideo().isEmpty()){
+                /**
                 holder.videoViewVideo.setVideoURI(Uri.parse(video.getVideo()));
                 holder.videoViewVideo.seekTo(1);
-                holder.videoViewVideo.resume();
+                holder.videoViewVideo.resume();*/
+                lifecycle.addObserver(holder.youTubePlayerView);
+                holder.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(YouTubePlayer youTubePlayer) {
+                        super.onReady(youTubePlayer);
+                        youTubePlayer.loadVideo(video.getVideo(), 0);
+                        youTubePlayer.mute();
+                    }
+                });
             }
         }
 
@@ -141,6 +158,7 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_videos, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -148,7 +166,7 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
         TextView txtDescripcionVideo;
         TextView txtUsuario;
         TextView txtLikes;
-        VideoView videoViewVideo;
+        YouTubePlayerView youTubePlayerView;
         ImageView imageViewLikes;
         View viewHolder;
 
@@ -157,12 +175,8 @@ public class VideosAdapter extends FirestoreRecyclerAdapter<Video, VideosAdapter
             txtDescripcionVideo = view.findViewById(R.id.txtVideoCard);
             txtUsuario = view.findViewById(R.id.txtUsuarioVideoCard);
             txtLikes = view.findViewById(R.id.txtLike);
-            videoViewVideo = view.findViewById(R.id.videoCard);
+            youTubePlayerView = view.findViewById(R.id.youtube_player_view);
             imageViewLikes = view.findViewById(R.id.imageViewLike);
-
-            MediaController mediaController = new MediaController(context);
-            videoViewVideo.setMediaController(mediaController);
-            mediaController.setAnchorView(videoViewVideo);
 
             viewHolder = view;
         }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -61,6 +62,7 @@ public class ChatActivity extends AppCompatActivity {
     String mExtraIdUsuario2;
     String mExtraIdChat;
     long mIdNotificacionChat;
+    private Vibrator vibrator;
 
     ChatsProvider mChatsProvider;
     UsuarioProvider mUsuarioProvider;
@@ -404,17 +406,20 @@ public class ChatActivity extends AppCompatActivity {
                     data.put("ultimoMensaje", ultimoMensaje);
                 }
                 FCMBody body = new FCMBody(token, "high", "4500s", data);
+                vibrator = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
                 mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
                     @Override
                     public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
                         if(response.body() != null){
                             if(response.body().getSuccess()==1){
-                                Toast.makeText(ChatActivity.this, "Notificacion enviada", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ChatActivity.this, "Mensaje enviado", Toast.LENGTH_LONG).show();
+                                long tiempo = 1000;
+                                vibrator.vibrate(tiempo);
                             }else {
-                                Toast.makeText(ChatActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ChatActivity.this, "Mensaje no enviado", Toast.LENGTH_LONG).show();
                             }
                         }else {
-                            Toast.makeText(ChatActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ChatActivity.this, "Mensaje no enviado", Toast.LENGTH_LONG).show();
                         }
                     }
 

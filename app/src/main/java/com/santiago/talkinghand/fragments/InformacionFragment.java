@@ -72,7 +72,7 @@ public class InformacionFragment extends Fragment {
         Query query = mVideoProvider.getTodos();
         FirestoreRecyclerOptions<Video> options = new FirestoreRecyclerOptions.Builder<Video>().
                 setQuery(query, Video.class).build();
-        mVideosAdapter = new VideosAdapter(options, getContext());
+        mVideosAdapter = new VideosAdapter(options, getContext(), this.getLifecycle());
         mRecyclerView.setAdapter(mVideosAdapter);
         mVideosAdapter.startListening();
     }

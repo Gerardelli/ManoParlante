@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -42,9 +43,11 @@
         </provider>
 
         <activity android:name=".activities.PublicacionActivity" />
-        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.HomeActivity"
+            android:theme="@style/SplashTheme"/>
         <activity android:name=".activities.RegistrarActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +70,7 @@ public class DetallePublicacionActivity extends AppCompatActivity {
     SliderAdapter mSliderAdapter;
     List<SliderItem> mSliderItems = new ArrayList<>();
     String mExtraPublicacionId;
+    private Vibrator vibrator;
 
     PublicacionProvider mPublicacionProvider;
     LikesProvider mLikesProvider;
@@ -256,17 +258,20 @@ public class DetallePublicacionActivity extends AppCompatActivity {
                         data.put("title", "Nuevo Comentario");
                         data.put("body", comment);
                         FCMBody body = new FCMBody(token, "high", "4500s", data);
+                        vibrator = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
                         mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
                             @Override
                             public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
                                 if(response.body() != null){
                                     if(response.body().getSuccess()==1){
                                         Toast.makeText(DetallePublicacionActivity.this, "Notificacion enviada", Toast.LENGTH_LONG).show();
+                                        long tiempo = 1000;
+                                        vibrator.vibrate(tiempo);
                                     }else {
-                                        Toast.makeText(DetallePublicacionActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(DetallePublicacionActivity.this, "Notificacion no enviada", Toast.LENGTH_LONG).show();
                                     }
                                 }else {
-                                    Toast.makeText(DetallePublicacionActivity.this, "Notificacion no fue enviada", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(DetallePublicacionActivity.this, "Notificacion no enviada", Toast.LENGTH_LONG).show();
                                 }
                             }
 

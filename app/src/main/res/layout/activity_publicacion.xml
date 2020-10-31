@@ -89,7 +89,7 @@
                 app:boxStrokeColor="@color/colorPrimaryDark"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 app:counterTextAppearance="@style/CounterText"
-                app:counterMaxLength="50"
+                app:counterMaxLength="120"
                 app:hintTextAppearance="@style/Hint"
                 app:counterOverflowTextAppearance="@style/Counter">
 
@@ -101,7 +101,7 @@
                     android:inputType="textMultiLine"
                     android:maxLines="5"
                     app:counterEnabled="true"
-                    app:counterMaxLength="50" />
+                    app:counterMaxLength="120" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

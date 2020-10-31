@@ -31,7 +31,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/portada"
-                    android:alpha="0.7"
                     android:scaleType="centerCrop"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -64,13 +63,13 @@
                             android:layout_height="wrap_content"
                             android:text="EDITAR"
                             android:textStyle="bold"
-                            android:textColor="@color/colorIcons"/>
+                            android:textColor="@color/colorSecondaryText"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PERFIL"
                             android:textStyle="bold"
-                            android:textColor="@color/colorIcons"/>
+                            android:textColor="@color/colorSecondaryText"/>
 
                 </LinearLayout>
 
@@ -131,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:text="SALIR"
                         android:textStyle="bold"
-                        android:textColor="@color/colorIcons"/>
+                        android:textColor="@color/colorSecondaryText"/>
                 </LinearLayout>
 
             </FrameLayout>
